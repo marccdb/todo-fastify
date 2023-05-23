@@ -1,10 +1,12 @@
 import Fastify from 'fastify'
+import routes from "./controller/todoController.js"
+/**
+ @type {import('fastify').FastifyInstance}
+ */
 const fastify = Fastify()
 
-fastify.get("/", async ()=>{
-    return {
-        name: "Hello World"
-    }
-})
+
+fastify.register(routes)
+
 
 fastify.listen({port: 3000})

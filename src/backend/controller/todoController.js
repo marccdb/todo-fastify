@@ -1,16 +1,34 @@
-import { GetAllTodos, CreateNewTodo } from "../services/todoService.js";
+import {
+  GetAllTodos,
+  GetTodo,
+  CreateNewTodo,
+  UpdateTodo,
+} from "../services/todoService.js";
 /**
  @param {FastifyInstance} fastify
  @param {Object} options
   */
 
 export default async function routes(fastify, options) {
-  fastify.get("/", async (req, reply) => {
+  fastify.get("/", async () => {
     return GetAllTodos();
   });
 
-  fastify.post("/", async (req, reply) => {
+  fastify.get("/:id", async (req) => {
+    const id = req.params.id;
+    return GetTodo(id);
+  });
+
+  fastify.post("/", async (req) => {
     const data = req.body;
     CreateNewTodo(data);
+    return data;
+  });
+
+  fastify.put("/:id", async (req) => {
+    const id = req.params.id;
+    const data = req.body;
+    UpdateTodo(id, data);
+    return data;
   });
 }

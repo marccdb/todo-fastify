@@ -6,9 +6,26 @@ export async function GetAllTodos() {
   return { todos };
 }
 
+export async function GetTodo(todoId) {
+  const parsedId = parseInt(todoId);
+  const todo = await prisma.todo.findUnique({ where: { id: parsedId } });
+  return { todo };
+}
 export async function CreateNewTodo(newTodoInput) {
   const newTodo = await prisma.todo.create({
     data: { title: newTodoInput.title, description: newTodoInput.description },
   });
   return newTodo;
+}
+
+export async function UpdateTodo(idToUpdate, updatedTodo) {
+  const parsedId = parseInt(idToUpdate);
+  await prisma.todo.update({
+    where: { id: parsedId },
+    data: {
+      title: updatedTodo.title,
+      description: updatedTodo.description,
+      createdAt: updatedTodo.createdAt,
+    },
+  });
 }

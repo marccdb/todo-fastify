@@ -6,8 +6,8 @@ export async function GetAllTodos() {
   return { todos };
 }
 
-export async function GetTodo(todoId) {
-  const parsedId = parseInt(todoId);
+export async function GetTodo(id) {
+  const parsedId = parseInt(id);
   const todo = await prisma.todo.findUnique({ where: { id: parsedId } });
   return { todo };
 }
@@ -28,4 +28,9 @@ export async function UpdateTodo(idToUpdate, updatedTodo) {
       createdAt: updatedTodo.createdAt,
     },
   });
+}
+
+export async function DeleteTodo(id) {
+  const parsedId = parseInt(id);
+  await prisma.todo.delete({ where: { id: parsedId } });
 }

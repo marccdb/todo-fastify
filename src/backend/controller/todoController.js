@@ -23,7 +23,7 @@ export default async function routes(fastify, options) {
   });
 
   fastify.post("/", async (req) => {
-    const data = req.body;
+    const data = JSON.parse(req.body);
     await CreateNewTodo(data);
     reply.code(201);
     return data;
